@@ -22,6 +22,20 @@ def get_page_or_404(name):
     return page
 
 
+def get_markdown_or_404(name):
+    """Return page content as a Django template or raise 404 error."""
+    try:
+        file_path = safe_join(settings.SITE_PAGES_DIRECTORY, name)
+    except ValueError:
+        raise Http404('Page Not Found')
+    else:
+        if not os.path.exists(file_path):
+            raise Http404('Page Not Found')
+    with open(file_path, 'rb') as f:
+        text = f.read()
+    return text
+
+
 def page(request, slug='index'):
     """Render the requested page if found."""
     file_name = '{}.html'.format(slug)
@@ -31,3 +45,14 @@ def page(request, slug='index'):
         'page': page,
     }
     return render(request, 'staticblog/page.html', context)
+
+
+def markdown(request, slug):
+    """Render the requested page if found."""
+    file_name = '{}.md'.format(slug)
+    text = get_markdown_or_404(file_name)
+    context = {
+        'slug': slug,
+        'text': text,
+    }
+    return render(request, 'staticblog/markdown.html', context)
