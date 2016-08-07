@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Draggable + Sortable</title>
+  <link rel="stylesheet" href="http://jqueryui.com/jquery-wp-content/themes/jqueryui.com/style.css"/>
+  <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+  <link rel="stylesheet" type="text/css" href="http://jqueryui.com/jquery-wp-content/themes/jquery/css/base.css?v=1"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <style>
+  ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
+  li { margin: 5px; padding: 5px; width: 150px; }
+  </style>
+  <script>
+  $(function() {
+    $( "#sortable tbody").sortable({
+      revert: true
+    });
+    //$( "table, tr, td" ).disableSelection();
+  });
+  </script>
+</head>
+<body>
+ 
+<ul>
+  <li id="draggable" class="ui-state-highlight">Drag me down</li>
+</ul>
+ 
+<table id="sortable">
+  <tbody>
+  <tr class="ui-state-default">
+    <td>erstens</td>
+    <td>zweitens</td>
+  </tr>
+  <tr class="ui-state-default">
+    <td>hansi</td>
+    <td>sumsi</td>
+  </tr>
+  <tr class="ui-state-default">
+    <td>ivana</td>
+    <td>peter</td>
+  </tr>
+</tbody>
+</table>
+ 
+ 
+</body>
+</html>

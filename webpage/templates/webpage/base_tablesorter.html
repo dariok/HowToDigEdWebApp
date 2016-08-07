@@ -1,0 +1,15 @@
+{% extends "webpage/base.html" %}
+{% load staticfiles %}
+ {% block scriptHeader %}
+    <link rel="stylesheet" type="text/css" href="{% static 'webpage/libraries/jquery.tablesorter/jquery.tablesorter.bootstrap.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'webpage/libraries/jquery.tablesorter/jquery.tablesorter.pager.css' %}"/>
+    <script src="{% static 'webpage/libraries/jquery.tablesorter/jquery.tablesorter.js' %}"></script>
+    <script src="{% static 'webpage/libraries/jquery.tablesorter/jquery.tablesorter.widgets.js' %}"></script>
+    <script src="{% static 'webpage/libraries/jquery.tablesorter/jquery.tablesorter.pager.js' %}"></script>
+
+    <script> $(function() { $("table").tablesorter({ theme : "bootstrap", widthFixed: false,
+        headerTemplate : '{content} {icon}', widgets : [ "uitheme", "filter", "zebra" ], filter_cssFilter: "form-control", }) }); 
+    </script>
+ {% endblock %}
+
+ 
