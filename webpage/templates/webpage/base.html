@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load staticblog_extras %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,12 +52,7 @@
                   <span class="caret"/>
                   </a>
                   <ul class="dropdown-menu">
-                    <li>
-                        <a href="#">DummyLink</a>
-                    </li>
-                    <li>
-                        <a href="#">DummyLink</a>
-                    </li>
+                    {% blogs_navbar %}
                   </ul>
                 </li>
             </ul>

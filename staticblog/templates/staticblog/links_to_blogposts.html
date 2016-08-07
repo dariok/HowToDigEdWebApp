@@ -1,0 +1,5 @@
+{% for x in sumsis %}
+    <li>
+        <a href="{% url 'staticblog:page' x %}">{{ x|capfirst  }}</a>
+    </li>
+{% endfor %} 

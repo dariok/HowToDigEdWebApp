@@ -1,0 +1,6 @@
+{% extends "webpage/base.html" %}
+{% load staticblog_extras %}
+{% block Titel %} {{ slug|capfirst }}{% endblock %}
+{% block content %}
+{% include page %}
+{% endblock %}
