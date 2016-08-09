@@ -1,5 +1,5 @@
 {% for x in slug_filenames %}
     <li>
-        <a href="{% url 'staticblog:markdown' x %}">{{ x|capfirst  }}</a>
+        <a href="{% url 'staticblog:render_static_page' x %}">{{ x|capfirst  }}</a>
     </li>
 {% endfor %} 
