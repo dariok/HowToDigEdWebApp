@@ -101,11 +101,11 @@ In case you are wondering about the first line, this is used to load our applica
 
 To admire our work, browse to [http://localhost:8080/exist/apps/thun-demo/pages/show.html](http://localhost:8080/exist/apps/thun-demo/pages/show.html) and you should see:
 
-![image alt text](staticblog/pages/img/part-2/image_1.jpg)
+![image alt text](img/part-2/image_1.jpg)
 
 But when you now try to go back to the application's start page, either by clicking on home or on the applications title, you will only see a 404 page not found error.
 
-![image alt text](staticblog/pages/img/part-2/image_2.jpg)
+![image alt text](/img/part-2/image_2.jpg)
 
 ## URL Redirecting
 
@@ -260,7 +260,7 @@ Save your changes and browse to [http://localhost:8080/exist/apps/thun-demo/inde
 
 [http://localhost:8080/exist/apps/thun-demo/pages/show.html](http://localhost:8080/exist/apps/thun-demo/pages/show.html).
 
-![image alt text](staticblog/pages/img/part-2/image_3.jpg)
+![image alt text](/staticblog/pages/img/part-2/image_3.jpg)
 
 But wait a second! Why is the eXist-db logo so ridiculously big. Especially in comparison to the *index.html*? ![image alt text](staticblog/pages/img/part-2/image_4.jpg)
 
