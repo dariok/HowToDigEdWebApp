@@ -88,7 +88,7 @@ Our first HTML document will be very minimalistic and just contain three lines o
 
 **Show.html**
 
-```xml
+```html
 <div class="templates:surround?with=templates/page.html&amp;at=content">
 
     <h1>show.html</h1>
@@ -134,13 +134,13 @@ To fix this, we have to do two things. First we have to remove the relative link
 
 Interestingly the bootstrap css-stylesheets are found and rendered correctly (NOTE:  To be honest, the logo is rendered far too big and in the wrong place. We will deal with this later.) as well as the eXist-db logo. Looking at the latter, we see that here the link is set as:
 
-<img **src****=****"$shared/**resources/images/powered-by.svg" alt="Powered by eXist-db"/>
+<img **src="$shared/**resources/images/powered-by.svg" alt="Powered by eXist-db"/>
 
 Here is obviously some variable **$shared** used which resolves in the directory  **/db/apps/shared-resources/. **
 
 Exactly this directive: "whenever you find the string “$shared" in a URL, replace “$shared” with “/db/apps/shared-resources/” can be found in the document named *controller.xql* which is located in our application's root-directory. Of course in this document this directive is written in a less prosaic but more machine readable manner (line 32-37): 
 
-...
+```xquery
 
 else if (contains($exist:path, "/$shared/")) then
 
@@ -154,13 +154,13 @@ else if (contains($exist:path, "/$shared/")) then
 
     </dispatch>
 
-…
+```
 
 ### $app-root-href
 
 Let´s use a similar method for our own purposes and write our own directive. A directive which declares something like: ‘whenever you meet a URL containing the string "$app-root-href", please redirect us to our index.html page.’ To achieve this, we add this code snippet into *controller.xql*, maybe after the first *else if *statement (i.e. around line 20)
 
-...
+```xquery
 
 else if (contains($exist:path,"$app-root-href")) then
 
@@ -172,23 +172,23 @@ else if (contains($exist:path,"$app-root-href")) then
 
     </dispatch>
 
-...
+```
 
 Save the changes and open our main template document *templates/page.html*. In this document we have to change the links referring to our *index.html*. Those links are found around line 22
 
-<a data-template="config:app-title" class="navbar-brand" href="./index.html">App Title</a>
+`<a data-template="config:app-title" class="navbar-brand" href="./index.html">App Title</a>`
 
 We change into:
 
-<a data-template="config:app-title" class="navbar-brand" href="$app-root-href/index.html">App Title</a>
+`<a data-template="config:app-title" class="navbar-brand" href="$app-root-href/index.html">App Title</a>`
 
 and line 30
 
-<a href="index.html">Home</a>
+`<a href="index.html">Home</a>`
 
 We change into:
 
-<a href="$app-root-href/index.html">Home</a>
+`<a href="$app-root-href/index.html">Home</a>`
 
 Save the changes in *templates/page.html* and then browse to our *pages.html* to check if the links are working. They should now.
 
@@ -196,11 +196,11 @@ Save the changes in *templates/page.html* and then browse to our *pages.html* to
 
 But this solution is not perfect yet. They will only work on your locally installed eXist-db instance because of the hard-coded link in the *controller.xql* document: 
 
-<redirect url="**[http://localhost:8080/exist/apps/thun-demo/index.htm**l](http://localhost:8080/exist/apps/thun-demo/index.html%22/)["/](http://localhost:8080/exist/apps/thun-demo/index.html%22/)>.
+`<redirect url="**[http://localhost:8080/exist/apps/thun-demo/index.htm**l](http://localhost:8080/exist/apps/thun-demo/index.html%22/)["/](http://localhost:8080/exist/apps/thun-demo/index.html%22/)>`.
 
 And we don´t like hard coded links. To get rid of them, we can use the variables which were created by the **Deployment Editor** and which are already loaded by default into the *controller.xql* as you can see in the lines 3-7. 
 
-...
+```xquery
 
 declare variable $exist:path external;
 
@@ -212,7 +212,7 @@ declare variable $exist:prefix external;
 
 declare variable $exist:root external;
 
-...
+```
 
 As the names of those variable may not be totally self explanatory, I would recommend to read about their values [here](http://exist-db.org/exist/apps/doc/urlrewrite.xml), in the section "Variables". 
 
@@ -220,7 +220,7 @@ As we are interested in referring to the our application's root directory, we ar
 
 So with the help of  **$exist:controller, $exist:path**,** **and some string manipulation, we replace the hardcoded value of the url-attribute in the redirect-element against
 
-<redirect url="/exist/apps/{$exist:controller}{substring-after($exist:path, "$app-root-href")}"/>
+`<redirect url="/exist/apps/{$exist:controller}{substring-after($exist:path, "$app-root-href")}"/>`
 
 This url still contains hard coded parts "*/exist/apps/*" but this part I would like to keep in my application anyway. 
 
@@ -230,7 +230,7 @@ After saving this change in *controller.xql* let's browse to [http://localhost:8
 
 As we are lazy and don't want to type (and remember) the whole url to our show.html page, let’s add a link to this page in our main template (*templates/page.html*):
 
-...
+```html
 
 <li class="dropdown" id="about">
 
@@ -246,7 +246,7 @@ As we are lazy and don't want to type (and remember) the whole url to our show.h
 
         <li>
 
-            **<a**** ****href****=****"$app-root-href/pages/show.html"****>show.html</a>**
+            **<a href="$app-root-href/pages/show.html">show.html</a>**
 
         </li>
 
@@ -254,7 +254,7 @@ As we are lazy and don't want to type (and remember) the whole url to our show.h
 
 </li>
 
-...
+```
 
 Save your changes and browse to [http://localhost:8080/exist/apps/thun-demo/index.html](http://localhost:8080/exist/apps/thun-demo/index.html). Click on **Home **where you should see the new link entry "show.html". Following this should lead you to our 
 
@@ -270,11 +270,11 @@ To find out what is going on or wrong, go to [http://localhost:8080/exist/apps/t
 
 Inspecting our application's code layout as well as our main template (*templates/pages.html*) the reason of this error becomes obvious. The path to *css/stlye.css *is referenced in *templates/pages.html* relative to the location of our index.html (which is situated in the application's root directory):
 
-<link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
+`<link rel="stylesheet" type="text/css" href="resources/css/style.css"/>`
 
 and without the use of any variable, like for instance the source of bootstrap´s css:
 
-<link rel="stylesheet" type="text/css" href="$shared/resources/css/bootstrap-3.0.3.min.css"/>.
+`<link rel="stylesheet" type="text/css" href="$shared/resources/css/bootstrap-3.0.3.min.css"/>.`
 
 And this means of course, that whenever we are on a html site which is not stored in the applications root directory (like index.html), the brwoser will always try to load this *style.css* from the wrong directory. 
 
@@ -324,7 +324,7 @@ After having our libraries in place, we have to set the matching links in *templ
 
 We can use the same logic as the people from eXist-db with their** $shared** variable creating our **$app-root** variable which will point to our applications root directory. So after their code in* controller.xql*
 
-...
+```xquery
 
 else if (contains($exist:path, "/$shared/")) then
 
@@ -338,9 +338,10 @@ else if (contains($exist:path, "/$shared/")) then
 
 </dispatch>
 
-…
+```
 
 we add:
+```xquery
 
 (: Resource paths starting with $app-root are loaded from the application's resource collection :)
 
@@ -356,13 +357,13 @@ else if (contains($exist:path,"**$app-root**")) then
 
 </dispatch>
 
-…
+```
 
 ## templates/pages.html
 
 The last thing we need to do now, is to change the links in our main template *templates/pages.html* so that they reference the libraries located in our application’s *resource* collection and not those stored in the eXist-db’s *shared-resources *app any more. This means we have to change our head element from:
 
-...
+```html
 
 <head>
 
@@ -386,9 +387,10 @@ The last thing we need to do now, is to change the links in our main template *t
 
 </head>
 
-…
+```
 
 to:
+```html
 
 <head>
 
@@ -400,17 +402,17 @@ to:
 
     <link rel="shortcut icon" href="$shared/resources/images/exist_icon_16x16.ico"/>
 
-    **<link**** ****rel****=****"stylesheet"**** ****type****=****"text/css"**** ****href****=****"$app-root/resources/css/bootstrap-3.0.3.min.css"****/>**
+    <link rel="stylesheet" type="text/css" href="$app-root/resources/css/bootstrap-3.0.3.min.css"/>
 
-**    ****<link**** ****rel****=****"stylesheet"**** ****type****=****"text/css"**** ****href****=****"$app-root/resources/css/style.css"****/>**
+    <link rel="stylesheet" type="text/css" href="$app-root/resources/css/style.css"/>
 
-**    ****<script**** ****type****=****"text/javascript"**** ****src****=****"$app-root/resources/js/jquery/jquery-2.2.1.min.js"****/>**
+    <script type="text/javascript" src="$app-root/resources/js/jquery/jquery-2.2.1.min.js"/>
 
-**    ****<script**** ****type****=****"text/javascript"**** ****src****=****"$app-root/resources/js/bootstrap-3.0.3.min.js"****/>**
+    <script type="text/javascript" src="$app-root/resources/js/bootstrap-3.0.3.min.js"/>
 
 </head>
 
-…
+```
 
 The actual effects all this hard work might be not very astonishing because the only visible change is the shrunken and now again right aligned eXist-db logo in our *[show.htm*l](http://localhost:8080/exist/apps/thun-demo/pages/show.html).
 
