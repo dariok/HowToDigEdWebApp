@@ -90,9 +90,7 @@ Our first HTML document will be very minimalistic and just contain three lines o
 
 ```html
 <div class="templates:surround?with=templates/page.html&amp;at=content">
-
     <h1>show.html</h1>
-
 </div>
 ```
 
@@ -141,19 +139,12 @@ Here is obviously some variable **$shared** used which resolves in the directory
 Exactly this directive: "whenever you find the string “$shared" in a URL, replace “$shared” with “/db/apps/shared-resources/” can be found in the document named *controller.xql* which is located in our application's root-directory. Of course in this document this directive is written in a less prosaic but more machine readable manner (line 32-37): 
 
 ```xquery
-
 else if (contains($exist:path, "/$shared/")) then
-
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-
         <forward url="/shared-resources/{substring-after($exist:path, '/$shared/')}">
-
             <set-header name="Cache-Control" value="max-age=3600, must-revalidate"/>
-
         </forward>
-
     </dispatch>
-
 ```
 
 ### $app-root-href
@@ -161,17 +152,11 @@ else if (contains($exist:path, "/$shared/")) then
 Let´s use a similar method for our own purposes and write our own directive. A directive which declares something like: ‘whenever you meet a URL containing the string "$app-root-href", please redirect us to our index.html page.’ To achieve this, we add this code snippet into *controller.xql*, maybe after the first *else if *statement (i.e. around line 20)
 
 ```xquery
-
 else if (contains($exist:path,"$app-root-href")) then
-
     (: forward root path to index.html :)
-
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-
         <redirect url="http://localhost:8080/exist/apps/thun-demo/index.html"/>
-
     </dispatch>
-
 ```
 
 Save the changes and open our main template document *templates/page.html*. In this document we have to change the links referring to our *index.html*. Those links are found around line 22
@@ -203,13 +188,9 @@ And we don´t like hard coded links. To get rid of them, we can use the variable
 ```xquery
 
 declare variable $exist:path external;
-
 declare variable $exist:resource external;
-
 declare variable $exist:controller external;
-
 declare variable $exist:prefix external;
-
 declare variable $exist:root external;
 
 ```
@@ -233,25 +214,15 @@ As we are lazy and don't want to type (and remember) the whole url to our show.h
 ```html
 
 <li class="dropdown" id="about">
-
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Home</a>
-
     <ul class="dropdown-menu">
-
         <li>
-
             <a href="$app-root-href/index.html">Home</a>
-
         </li>
-
         <li>
-
-            **<a href="$app-root-href/pages/show.html">show.html</a>**
-
+            <a href="$app-root-href/pages/show.html">show.html</a>
         </li>
-
     </ul>
-
 </li>
 
 ```
@@ -325,38 +296,23 @@ After having our libraries in place, we have to set the matching links in *templ
 We can use the same logic as the people from eXist-db with their** $shared** variable creating our **$app-root** variable which will point to our applications root directory. So after their code in* controller.xql*
 
 ```xquery
-
 else if (contains($exist:path, "/$shared/")) then
-
 <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-
     <forward url="/shared-resources/{substring-after($exist:path, '/$shared/')}">
-
         <set-header name="Cache-Control" value="max-age=3600, must-revalidate"/>
-
     </forward>
-
 </dispatch>
-
 ```
 
 we add:
 ```xquery
-
 (: Resource paths starting with $app-root are loaded from the application's resource collection :)
-
 else if (contains($exist:path,"**$app-root**")) then
-
 <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-
     <forward url="{$exist:controller}/{substring-after($exist:path, '$app-root/')}">
-
         <set-header name="Cache-Control" value="no"/>
-
     </forward>
-
 </dispatch>
-
 ```
 
 ## templates/pages.html
@@ -364,54 +320,31 @@ else if (contains($exist:path,"**$app-root**")) then
 The last thing we need to do now, is to change the links in our main template *templates/pages.html* so that they reference the libraries located in our application’s *resource* collection and not those stored in the eXist-db’s *shared-resources *app any more. This means we have to change our head element from:
 
 ```html
-
 <head>
-
     <title data-template="config:app-title">App Title</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
     <meta data-template="config:app-meta"/>
-
     <link rel="shortcut icon" href="$shared/resources/images/exist_icon_16x16.ico"/>
-
     <link rel="stylesheet" type="text/css" href="$shared/resources/css/bootstrap-3.0.3.min.css"/>
-
     <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
-
     <script type="text/javascript" src="$shared/resources/scripts/jquery/jquery-1.7.1.min.js"/>
-
     <script type="text/javascript" src="$shared/resources/scripts/loadsource.js"/>
-
     <script type="text/javascript" src="$shared/resources/scripts/bootstrap-3.0.3.min.js"/>
-
 </head>
-
 ```
 
 to:
 ```html
-
 <head>
-
     <title data-template="config:app-title">App Title</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
     <meta data-template="config:app-meta"/>
-
     <link rel="shortcut icon" href="$shared/resources/images/exist_icon_16x16.ico"/>
-
     <link rel="stylesheet" type="text/css" href="$app-root/resources/css/bootstrap-3.0.3.min.css"/>
-
     <link rel="stylesheet" type="text/css" href="$app-root/resources/css/style.css"/>
-
     <script type="text/javascript" src="$app-root/resources/js/jquery/jquery-2.2.1.min.js"/>
-
     <script type="text/javascript" src="$app-root/resources/js/bootstrap-3.0.3.min.js"/>
-
 </head>
-
 ```
 
 The actual effects all this hard work might be not very astonishing because the only visible change is the shrunken and now again right aligned eXist-db logo in our *[show.htm*l](http://localhost:8080/exist/apps/thun-demo/pages/show.html).
