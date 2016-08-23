@@ -147,9 +147,11 @@ Let’s add our own table of content function to this file. The easiest way to s
 
 ```xquery
 declare function app:toc($node as node(), $model as map(*)) {};
+```
 
 Now lets add the code snippet from our little play script between the curly brackets: 
 
+```xquery
 declare function app:toc($node as node(), $model as map(*)) {
 
     for $doc in collection("/db/apps/thun-demo/data/editions")/tei:TEI
