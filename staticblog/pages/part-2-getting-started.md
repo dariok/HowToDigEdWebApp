@@ -88,7 +88,7 @@ Our first HTML document will be very minimalistic and just contain three lines o
 
 **Show.html**
 
-```
+```xml
 <div class="templates:surround?with=templates/page.html&amp;at=content">
 
     <h1>show.html</h1>
@@ -112,7 +112,7 @@ But when you now try to go back to the application's start page, either by click
 ### Adapt templates/page.html and controller.xql
 
 To fix this, we have to do two things. First we have to remove the relative links in our applications base template *templates/page.html*. Because when you open this document you can see, that the links to the start page *index.html* are described relative to our application’s root directory. 
-```
+```html
 ...
 
 <a data-template="config:app-title" class="navbar-brand" href="./index.html">App Title</a>
