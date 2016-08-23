@@ -34,8 +34,8 @@ To do so, add the following lines to **modules/app.xql**:
 
 ```xquery
 declare function app:XMLtoHTML ($node as node(), $model as map (*), $query as xs:string?) {
-**let $xml := doc("/db/apps/thun-demo/data/editions/celakovsky-an-thun_1850_A3-XXI-D82.xml")**
-**let $xsl := doc("/db/apps/thun-demo/resources/xslt/xmlToHtml.xsl")**
+let $xml := doc("/db/apps/thun-demo/data/editions/celakovsky-an-thun_1850_A3-XXI-D82.xml")**
+let $xsl := doc("/db/apps/thun-demo/resources/xslt/xmlToHtml.xsl")**
 let $params := 
 <parameters>
    {for $p in request:get-parameter-names()
