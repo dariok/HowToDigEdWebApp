@@ -38,7 +38,7 @@ After clicking **Done** another window should have opened, showing you the conte
 
 The basic application code layout created by the Deployment Editor consists of the three directories (modules, resources, templates) and seven documents of different kind stored in the application's root directory. 
 
-To see the results of all our effort, browse to [http://localhost:8080/exist/apps/thun-demo/index.html](http://localhost:8080/exist/apps/thun-demo/index.html). ![image alt text](/part-2/image_0.jpg)
+To see the results of all our effort, browse to [http://localhost:8080/exist/apps/thun-demo/index.html](http://localhost:8080/exist/apps/thun-demo/index.html). ![image alt text](/part-2/image_0.jpg?raw=true)
 
 We could start building our digital edition application right away. But I prefer to modify this default application code layout a little bit. Because right now all our HTML files are meant to be stored in the application’s root directory. This is basically not a problem but I like a more structured code base. Therefore let´s create a new directory in our application's root directory, called *pages*. To create a new directory you can browse to eXist-db´s [dashboard](http://localhost:8080/exist/apps/dashboard/index.html) and click on the the **Collections **tile which will open the **Collection Browser**. Navigate to the application root directory */db/apps/thun-demo*, click on the **New Collection** icon, enter *pages* as **name** and click ok.
 
