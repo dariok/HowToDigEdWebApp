@@ -26,7 +26,7 @@ These malfunctions are clearly related with hard coded URLs we introduced in the
 
 We create the table of content with the self created function *app:toc* and so far, this function fetches the data needed to create the table of content from
 
-`xquery for $doc in collection("/db/apps/thun-demo/data/editions")/tei:TEI`
+`for $doc in collection("/db/apps/thun-demo/data/editions")/tei:TEI`
 
 To remove the application’s name from this function we use the variable *$config:app-root* which, according to the inline comment to this variable/function "Determine[s] the application root collection from the current module load path." For our application this means that $config:app-root will resolve into */db/apps/thun-demo/*. Since our XML/TEI documents are stored in */db/apps/thun-demo/***_data/edition/_*** *we have to add this last part. This we achieve with the xQuery function *concat* which concatenates two or more strings. Everything put together resolves in:
 
