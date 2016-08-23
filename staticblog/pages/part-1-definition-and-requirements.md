@@ -1,9 +1,3 @@
-HowTo build a Digital Edition Web App
-
-Part 1 - Definition and Requirements
-
-[[TOC]]
-
 # Part I - Definition and Requirements 
 
 ## A definition of digital edition
