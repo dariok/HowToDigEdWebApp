@@ -102,7 +102,7 @@ So if you have to decided on how to structure your index documents I very much r
 
 Getting back to our concret Thun-Demo application, we now have to think about a place or collection where to store the index documents in the database. Since the index files are closely related to the XML/TEI documents of the edited texts, it makes sense to keep them close to each other. Therefore let’s create in `/data` a new collection called `/data/indices/` and here we store our person index, which will name **listPers.xml.**
 
-![image alt text]({{ site.baseurl }}/images/part-7/image_0.jpg)
+![image alt text](../../static/staticblog/img/part-7/image_0.jpg)
 
 ## HTML and xQuery
 
@@ -152,7 +152,7 @@ What is left to do now, is to add a link to **/pages/persons.html** into the app
 
 Now we can browse to the person’s index of our digital edition.
 
-![image alt text]({{ site.baseurl }}/images/part-7/image_1.jpg)
+![image alt text](../../static/staticblog/img/part-7/image_1.jpg)
 
 # Link index with documents
 
@@ -186,11 +186,11 @@ declare function app:listPers($node as node(), $model as map(*)) {
 
 Now the names listed in persons.html are nice links:
 
-![image alt text]({{ site.baseurl }}/images/part-7/image_2.jpg)
+![image alt text](../../static/staticblog/img/part-7/image_2.jpg)
 
 But since we did not yet create a function called **app:listPers_hits** yet, we will receive the following error message when we try to follow one of those links. But the important thing is, that the we landed on the right page (hits.html) and that the value of the xml:id of the person’s name we clicked on shows up as in the ‘searchkey’ URL parameter. 
 
-![image alt text]({{ site.baseurl }}/images/part-7/image_3.jpg)
+![image alt text](../../static/staticblog/img/part-7/image_3.jpg)
 
 ## app:listPers_hits
 
@@ -212,7 +212,7 @@ Since the test corpus we are working with contains only a handful of documents f
 
 [http://localhost:8080/exist/apps/thun-demo/pages/hits.html?searchkey=brueggemann-theodor](http://localhost:8080/exist/apps/thun-demo/pages/hits.html?searchkey=brueggemann-theodor)
 
-![image alt text]({{ site.baseurl }}/images/part-7/image_4.jpg)
+![image alt text](../../static/staticblog/img/part-7/image_4.jpg)
 
  As mentioned in the beginning of this document, strings referring to persons, places or other things you find important enough to tag them, should actually be tagged with `<rs>`. To make our little **app:listPers_hits** agnostic to the chosen markup, we can add another constraint on the "for" expression
 **modules/app.xql**:
@@ -245,7 +245,7 @@ declare function app:listPers_hits($node as node(), $model as map(*), $searchkey
 
 No we have perfectly working links:
 
-![image alt text]({{ site.baseurl }}/images/part-7/image_5.jpg)
+![image alt text](../../static/staticblog/img/part-7/image_5.jpg)
 
 But be aware that using the same or very similar lines of code in several different places is a good indicator for bad code and usually an excellent starting point for refactoring the code. We will take care about this in one of the following tutorials.
 

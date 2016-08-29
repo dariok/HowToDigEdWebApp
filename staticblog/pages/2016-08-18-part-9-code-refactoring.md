@@ -67,9 +67,9 @@ for $hit in collection(concat($config:app-root, '/data/editions/'))//tei:p[ft:qu
 
 Finally we can browse to [http://localhost:8080/exist/apps/thun-demo/pages/ft_search.html](http://localhost:8080/exist/apps/thun-demo/pages/ft_search.html) search for e.g. "leben" (living), 
 
-![image alt text]({{ site.baseurl }}/images/part-9/image_0.jpg)
+![image alt text](../../static/staticblog/img/part-9/image_0.jpg)
 
-and clicking on "Leben" to get to the actual document.  ![image alt text]({{ site.baseurl }}/images/part-9/image_1.jpg)
+and clicking on "Leben" to get to the actual document.  ![image alt text](../../static/staticblog/img/part-9/image_1.jpg)
 
 # All or nothing
 

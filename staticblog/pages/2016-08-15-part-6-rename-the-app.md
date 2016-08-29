@@ -93,11 +93,11 @@ Now we can install this packages and see if everything works as it should or if 
 
 Looks good:
 
-![image alt text]({{ site.baseurl }}/images/part-6/image_0.jpg)
+![image alt text](../../static/staticblog/img/part-6/image_0.jpg)
 
 Well not completely, since we are using still the XML/TEI documents from Thun-Demo as we can see in our table of content. 
 
-![image alt text]({{ site.baseurl }}/images/part-6/image_1.jpg)
+![image alt text](../../static/staticblog/img/part-6/image_1.jpg)
 
 But this is easy to fix. Just replace the documents stored in `data/editions/` and you are done.
 
