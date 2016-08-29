@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      # Part 8 - Full text search
+title:     Part 8 - Full text search
 date:       2016-08-16 11:21:29
 summary:    In the eighth part we are going to build a full text search.
 categories: digital-edition

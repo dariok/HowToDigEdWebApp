@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      # Part 7 - Index based Search
+title:     Part 7 - Index based Search
 date:       2016-08-16 11:21:29
 summary:    In the seventh part we will attack the issue of an index based search.
 categories: digital-edition

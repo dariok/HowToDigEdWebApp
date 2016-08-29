@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      # Part 9 - Code refactoring
+title:      Part 9 - Code refactoring
 date:       2016-08-16 11:21:29
 summary:    In the eighth part we are going to build a full text search.
 categories: digital-edition

@@ -1,4 +1,6 @@
 import os
+import re
+import yaml
 import markdown2
 from django.shortcuts import render
 from django.conf import settings
@@ -54,10 +56,17 @@ def get_markdown_or_404(name):
     else:
         if not os.path.exists(file_path):
             raise Http404('Page Not Found')
-    with open(file_path, 'rb') as f:
+    with open(file_path, 'r', encoding='utf-8') as f:
         text = f.read()
-        html = markdown2.markdown(text, extras=["fenced-code-blocks"])
-    return html
+    replace_pattern = re.compile(r'---.*?---', re.DOTALL)
+    stripped_text = re.sub(replace_pattern, '', text, re.DOTALL)
+    html = markdown2.markdown(stripped_text, extras=["fenced-code-blocks"])
+    try:
+        metadata = yaml.load(re.findall('---(.*?)---', text, re.S)[0])
+    except:
+        metadata = {"title": "no metadata provided"}
+    parsed_md = {"html": html, "metadata": metadata}
+    return parsed_md
 
 
 def page(request, slug='index'):
@@ -77,7 +86,8 @@ def render_static_page(request, slug):
     if fileinfo["extension"] in [".md", ".txt"]:
         context = {
             'slug': slug,
-            'text': get_markdown_or_404(fileinfo["filename"]),
+            'text': get_markdown_or_404(fileinfo["filename"])["html"],
+            'metadata': get_markdown_or_404(fileinfo["filename"])["metadata"],
         }
         return render(request, 'staticblog/markdown.html', context)
 
