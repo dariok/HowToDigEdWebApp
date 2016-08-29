@@ -1,6 +1,9 @@
 {% extends "webpage/base.html" %}
 {% load staticfiles %}
-
+{% block scriptHeader %}
+    <!-- markdwon extension https://github.com/richleland/pygments-css -->
+    <link rel="stylesheet" href="{% static 'staticblog/css/colorful.css' %}"/></link>
+{% endblock %}
 {% block content %}
 
 <div class="container">

@@ -1,6 +1,13 @@
-# Part 2 - Getting started
+---
+layout:     post
+title:      # Part 2 - Getting started
+date:       2016-08-11 11:21:29
+summary:    In the second part of our tutorial we will install eXist-db, and create a ‘plain vanilla’ eXist-db web application using eXist-db´s in build Deployment Editor.
+categories: digital-edition
+---
 
 # Introduction
+
 
 In the second part of our tutorial we will install eXist-db, and create a ‘plain vanilla’ eXist-db web application using eXist-db´s in build **Deployment Editor**. Then we will start customizing this standard web app to our needs. We will customize the code layout by adding new directories and documents as well as ad some few lines of code in our applications controller.xql which is the script which is responsible to process the urls typed in the browser while navigating/controlling our application. These modifications do neither result in spectacular results, nor are very exiting as it will mostly be copy and pasting work. But this part of the tutorial will ease our further developement and might give you some general (although very superficial) insights in general mechanics of web applications.  
 
@@ -38,9 +45,9 @@ After clicking **Done** another window should have opened, showing you the conte
 
 The basic application code layout created by the Deployment Editor consists of the three directories (modules, resources, templates) and seven documents of different kind stored in the application's root directory. 
 
-To see the results of all our effort, browse to [http://localhost:8080/exist/apps/thun-demo/index.html](http://localhost:8080/exist/apps/thun-demo/index.html). ![image alt text](/staticblog/pages/img//staticblog/pages/img/part-2/image_0.jpg)
+To see the results of all our effort, browse to [http://localhost:8080/exist/apps/thun-demo/index.html](http://localhost:8080/exist/apps/thun-demo/index.html). ![image alt text](../../static/staticblog/img/part-2/image_0.jpg)
 
-We could start building our digital edition application right away. But I prefer to modify this default application code layout a little bit. Because right now all our HTML files are meant to be stored in the application’s root directory. This is basically not a problem but I like a more structured code base. Therefore let´s create a new directory in our application's root directory, called *pages*. To create a new directory you can browse to eXist-db´s [dashboard](http://localhost:8080/exist/apps/dashboard/index.html) and click on the the **Collections **tile which will open the **Collection Browser**. Navigate to the application root directory */db/apps/thun-demo*, click on the **New Collection** icon, enter *pages* as **name** and click ok.
+We could start building our digital edition application right away. But I prefer to modify this default application code layout a little bit. Because right now all our HTML files are meant to be stored in the application’s root directory. This is basically not a problem but I like a more structured code base. Therefore let´s create a new directory in our application's root directory, called *pages*. To create a new directory you can browse to eXist-db´s [dashboard](http://localhost:8080/exist/apps/dashboard/index.html) and click on the the **Collections** tile which will open the **Collection Browser**. Navigate to the application root directory */db/apps/thun-demo*, click on the **New Collection** icon, enter *pages* as **name** and click ok.
 
 ## Connect oXygen and eXist-db
 
@@ -99,11 +106,11 @@ In case you are wondering about the first line, this is used to load our applica
 
 To admire our work, browse to [http://localhost:8080/exist/apps/thun-demo/pages/show.html](http://localhost:8080/exist/apps/thun-demo/pages/show.html) and you should see:
 
-![image alt text](/staticblog/pages/img/part-2/image_1.jpg)
+![image alt text](../../static/staticblog/img/part-2/image_1.jpg)
 
 But when you now try to go back to the application's start page, either by clicking on home or on the applications title, you will only see a 404 page not found error.
 
-![image alt text](/staticblog/pages/img/part-2/image_2.jpg)
+![image alt text](../../static/staticblog/img/part-2/image_2.jpg)
 
 ## URL Redirecting
 
@@ -113,8 +120,12 @@ To fix this, we have to do two things. First we have to remove the relative link
 
 ```html
 ...
+
 <a data-template="config:app-title" class="navbar-brand" href="./index.html">App Title</a>
+
 ...
+
+
 <li class="dropdown" id="about">
  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Home</a>
 	<ul class="dropdown-menu">
@@ -123,6 +134,7 @@ To fix this, we have to do two things. First we have to remove the relative link
 		</li>
 	</ul>
 </li>
+
 ...
 ```
 
@@ -130,9 +142,9 @@ Interestingly the bootstrap css-stylesheets are found and rendered correctly (NO
 
 `<img src="$shared/resources/images/powered-by.svg" alt="Powered by eXist-db"/>`
 
-Here is obviously some variable **$shared** used which resolves in the directory  **/db/apps/shared-resources/. **
+Here is obviously some variable **$shared** used which resolves in the directory  `/db/apps/shared-resources/`.
 
-Exactly this directive: "whenever you find the string “$shared" in a URL, replace “$shared” with “/db/apps/shared-resources/” can be found in the document named *controller.xql* which is located in our application's root-directory. Of course in this document this directive is written in a less prosaic but more machine readable manner (line 32-37): 
+Exactly this directive: "whenever you find the string **"$shared"** in a URL, replace "$shared” with `/db/apps/shared-resources/` can be found in the document named *controller.xql* which is located in our application's root-directory. Of course in this document this directive is written in a less prosaic but more machine readable manner (line 32-37): 
 
 ```xquery
 else if (contains($exist:path, "/$shared/")) then
@@ -145,7 +157,7 @@ else if (contains($exist:path, "/$shared/")) then
 
 ### $app-root-href
 
-Let´s use a similar method for our own purposes and write our own directive. A directive which declares something like: ‘whenever you meet a URL containing the string "$app-root-href", please redirect us to our index.html page.’ To achieve this, we add this code snippet into *controller.xql*, maybe after the first *else if *statement (i.e. around line 20)
+Let´s use a similar method for our own purposes and write our own directive. A directive which declares something like: ‘whenever you meet a URL containing the string "$app-root-href", please redirect us to our index.html page.’ To achieve this, we add this code snippet into *controller.xql*, maybe after the first *else if* statement (i.e. around line 20)
 
 ```xquery
 else if (contains($exist:path,"$app-root-href")) then
@@ -177,7 +189,7 @@ Save the changes in *templates/page.html* and then browse to our *pages.html* to
 
 But this solution is not perfect yet. They will only work on your locally installed eXist-db instance because of the hard-coded link in the *controller.xql* document: 
 
-`<redirect url="**[http://localhost:8080/exist/apps/thun-demo/index.htm**l](http://localhost:8080/exist/apps/thun-demo/index.html%22/)["/](http://localhost:8080/exist/apps/thun-demo/index.html%22/)>`.
+`<redirect url="http://localhost:8080/exist/apps/thun-demo/index.html/">`.
 
 And we don´t like hard coded links. To get rid of them, we can use the variables which were created by the **Deployment Editor** and which are already loaded by default into the *controller.xql* as you can see in the lines 3-7. 
 
@@ -195,7 +207,7 @@ As the names of those variable may not be totally self explanatory, I would reco
 
 As we are interested in referring to the our application's root directory, we are going to use **$exist:controller** because this point to the directory in which the document *controller.xql* is located. And this is the application's root directory. 
 
-So with the help of  **$exist:controller, $exist:path**,** **and some string manipulation, we replace the hardcoded value of the url-attribute in the redirect-element against
+So with the help of  **$exist:controller, $exist:path**, and some string manipulation, we replace the hardcoded value of the url-attribute in the redirect-element against
 
 `<redirect url="/exist/apps/{$exist:controller}{substring-after($exist:path, "$app-root-href")}"/>`
 
@@ -223,13 +235,13 @@ As we are lazy and don't want to type (and remember) the whole url to our show.h
 
 ```
 
-Save your changes and browse to [http://localhost:8080/exist/apps/thun-demo/index.html](http://localhost:8080/exist/apps/thun-demo/index.html). Click on **Home **where you should see the new link entry "show.html". Following this should lead you to our 
+Save your changes and browse to [http://localhost:8080/exist/apps/thun-demo/index.html](http://localhost:8080/exist/apps/thun-demo/index.html). Click on **Home** where you should see the new link entry "show.html". Following this should lead you to our 
 
 [http://localhost:8080/exist/apps/thun-demo/pages/show.html](http://localhost:8080/exist/apps/thun-demo/pages/show.html).
 
-![image alt text](/staticblog/pages/img/part-2/image_3.jpg)
+![image alt text](../../static/staticblog/img/part-2/image_3.jpg)
 
-But wait a second! Why is the eXist-db logo so ridiculously big. Especially in comparison to the *index.html*? ![image alt text](/staticblog/pages/img/part-2/image_4.jpg)
+But wait a second! Why is the eXist-db logo so ridiculously big. Especially in comparison to the *index.html*? ![image alt text](../../static/staticblog/img/part-2/image_4.jpg)
 
 To find out what is going on or wrong, go to [http://localhost:8080/exist/apps/thun-demo/pages/show.html](http://localhost:8080/exist/apps/thun-demo/pages/show.html) and open your browser’s developer tool (F12 in Chrome). Here you should find an error message complaining about something like:
 
@@ -259,7 +271,7 @@ We will start with the latter. Looking into the header section of *templates/pag
 
 We don't need the latter and we can replace the other files/libraries. 
 
-Go to the *resources directory* located in our application’s root directory. Currently this directory contains only another directory called *css *which contains the aforementioned* style.css*. Create the following new directories (or collections to use eXist-db’s terminology) in this *resources directory*.
+Go to the *resources directory* located in our application’s root directory. Currently this directory contains only another directory called *css* which contains the aforementioned *style.css*. Create the following new directories (or collections to use eXist-db’s terminology) in this *resources directory*.
 
 * fonts
 
@@ -271,17 +283,17 @@ Go to the *resources directory* located in our application’s root directory. C
 
 Your resources collection should now look like on the following screenshot taken from eXist-db **Collection Browser**:
 
-![image alt text](/staticblog/pages/img/part-2/image_5.jpg)
+![image alt text](../../static/staticblog/img/part-2/image_5.jpg)
 
 Of course we need to populate these collections with some documents.
 
 In *resources/css* add your favorite [bootstrap library](http://getbootstrap.com/). We are using bootstrap-3.0.3.min.css which you can copy and paste from eXist-db’s shared *shared-resources* collection. 
 
-In *resources/js* create a collection *jquery* and one called *tablesorter*. In *resources/js/jquery *add the [jQuery](https://jquery.com/) library of your choice (but it should be compatible with your chosen bootstrap library).
+In *resources/js* create a collection *jquery* and one called *tablesorter*. In *resources/js/jquery* add the [jQuery](https://jquery.com/) library of your choice (but it should be compatible with your chosen bootstrap library).
 
-In *resources/js *add the bootstrap javascript libraries needed for bootstrap. For the time being we are done and our resource collection should look like on the screenshot below.
+In *resources/js* add the bootstrap javascript libraries needed for bootstrap. For the time being we are done and our resource collection should look like on the screenshot below.
 
-![image alt text](/staticblog/pages/img/part-2/image_6.jpg)
+![image alt text](../../static/staticblog/img/part-2/image_6.jpg)
 
 ## URL Forwarding
 
@@ -289,7 +301,7 @@ After having our libraries in place, we have to set the matching links in *templ
 
 ### $app-root
 
-We can use the same logic as the people from eXist-db with their** $shared** variable creating our **$app-root** variable which will point to our applications root directory. So after their code in* controller.xql*
+We can use the same logic as the people from eXist-db with their** $shared** variable creating our **$app-root** variable which will point to our applications root directory. So after their code in **controller.xql**
 
 ```xquery
 else if (contains($exist:path, "/$shared/")) then
@@ -301,6 +313,7 @@ else if (contains($exist:path, "/$shared/")) then
 ```
 
 we add:
+
 ```xquery
 (: Resource paths starting with $app-root are loaded from the application's resource collection :)
 else if (contains($exist:path,"**$app-root**")) then
@@ -344,15 +357,15 @@ to:
 </head>
 ```
 
-The actual effects all this hard work might be not very astonishing because the only visible change is the shrunken and now again right aligned eXist-db logo in our *[show.htm*l](http://localhost:8080/exist/apps/thun-demo/pages/show.html).
+The actual effects all this hard work might be not very astonishing because the only visible change is the shrunken and now again right aligned eXist-db logo in our [show.html](http://localhost:8080/exist/apps/thun-demo/pages/show.html).
 
-![image alt text](/staticblog/pages/img/part-2/image_7.jpg)
+![image alt text](../../static/staticblog/img/part-2/image_7.jpg)
 
-To check out if our *templates/pages.html* template is really loading the bootstrap library from our application’s *resource *collection, let's change the bootstrap theme. Therefore you could go to [http://bootswatch.com/](http://bootswatch.com/) select the theme you like, click on download, copy the all the css text, go to the bootstrap file in our application’s *resource/css collection *(*resources/css/bootstrap-3.0.3.min.css*), open it and replace its content. Save your changes, go back to the browser and reload the page. If nothing went wrong, you should see some changes like on the screenshot below, showing our application styled with [http://bootswatch.com/superhero/](http://bootswatch.com/superhero/)
+To check out if our *templates/pages.html* template is really loading the bootstrap library from our application’s resource collection, let's change the bootstrap theme. Therefore you could go to [http://bootswatch.com/](http://bootswatch.com/) select the theme you like, click on download, copy the all the css text, go to the bootstrap file in our application’s *resource/css* collection (`resources/css/bootstrap-3.0.3.min.css`), open it and replace its content. Save your changes, go back to the browser and reload the page. If nothing went wrong, you should see some changes like on the screenshot below, showing our application styled with [http://bootswatch.com/superhero/](http://bootswatch.com/superhero/)
 
-![image alt text](/staticblog/pages/img/part-2/image_8.jpg)
+![image alt text](../../static/staticblog/img/part-2/image_8.jpg)
 
-![image alt text](/staticblog/pages/img/part-2/image_9.jpg)
+![image alt text](../../static/staticblog/img/part-2/image_9.jpg)
 
 # Conclusion and outlook
 
@@ -376,5 +389,5 @@ We
 
 ## Upcoming steps
 
-In the third part of this tutorial we will upload the XML/TEI files in our database and write our first xQuery function which will generate a very basic table of content from the uploaded XML/TEI documents. To present this table of content to the users of our web app, we will also learn how to integrate xQuery functions in HTML code. 
+In the [third part]({% post_url 2016-08-12-part-3-table-of-content %}) of this tutorial we will upload the XML/TEI files in our database and write our first xQuery function which will generate a very basic table of content from the uploaded XML/TEI documents. To present this table of content to the users of our web app, we will also learn how to integrate xQuery functions in HTML code. 
 
