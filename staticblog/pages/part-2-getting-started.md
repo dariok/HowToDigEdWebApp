@@ -110,14 +110,11 @@ But when you now try to go back to the application's start page, either by click
 ### Adapt templates/page.html and controller.xql
 
 To fix this, we have to do two things. First we have to remove the relative links in our applications base template *templates/page.html*. Because when you open this document you can see, that the links to the start page *index.html* are described relative to our application’s root directory. 
+
 ```html
 ...
-
 <a data-template="config:app-title" class="navbar-brand" href="./index.html">App Title</a>
-
 ...
-
-
 <li class="dropdown" id="about">
  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Home</a>
 	<ul class="dropdown-menu">
@@ -126,13 +123,12 @@ To fix this, we have to do two things. First we have to remove the relative link
 		</li>
 	</ul>
 </li>
-
 ...
 ```
 
 Interestingly the bootstrap css-stylesheets are found and rendered correctly (NOTE:  To be honest, the logo is rendered far too big and in the wrong place. We will deal with this later.) as well as the eXist-db logo. Looking at the latter, we see that here the link is set as:
 
-<img **src="$shared/**resources/images/powered-by.svg" alt="Powered by eXist-db"/>
+`<img src="$shared/resources/images/powered-by.svg" alt="Powered by eXist-db"/>`
 
 Here is obviously some variable **$shared** used which resolves in the directory  **/db/apps/shared-resources/. **
 
@@ -317,7 +313,7 @@ else if (contains($exist:path,"**$app-root**")) then
 
 ## templates/pages.html
 
-The last thing we need to do now, is to change the links in our main template *templates/pages.html* so that they reference the libraries located in our application’s *resource* collection and not those stored in the eXist-db’s *shared-resources *app any more. This means we have to change our head element from:
+The last thing we need to do now, is to change the links in our main template *templates/pages.html* so that they reference the libraries located in our application’s *resource* collection and not those stored in the eXist-db’s *shared-resources* app any more. This means we have to change our head element from:
 
 ```html
 <head>
@@ -334,6 +330,7 @@ The last thing we need to do now, is to change the links in our main template *t
 ```
 
 to:
+
 ```html
 <head>
     <title data-template="config:app-title">App Title</title>

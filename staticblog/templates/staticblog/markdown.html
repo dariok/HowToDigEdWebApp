@@ -1,12 +1,12 @@
 {% extends "webpage/base.html" %}
-{% load markdown_deux_tags %}
 {% load staticfiles %}
+
 {% block content %}
 
 <div class="container">
-{% markdown STYLE %}
+
 {{ text|safe }}
-{% endmarkdown %}
+
 
 
 </div>

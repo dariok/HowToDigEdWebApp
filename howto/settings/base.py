@@ -19,6 +19,20 @@ INSTALLED_APPS = [
     'staticblog',
 ]
 
+MARKDOWN_DEUX_STYLES = {
+        "default": {
+            "extras": {
+                "code-friendly": None,
+            },
+            "safe_mode": "escape",
+        },
+        "trusted": {
+            "extras": {
+                "code-friendly": None,
+            },
+            "safe_mode": False,
+        }
+    }
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',

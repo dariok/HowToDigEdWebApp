@@ -1,4 +1,5 @@
 import os
+import markdown2
 from django.shortcuts import render
 from django.conf import settings
 from django.http import Http404, HttpResponseNotFound
@@ -55,7 +56,8 @@ def get_markdown_or_404(name):
             raise Http404('Page Not Found')
     with open(file_path, 'rb') as f:
         text = f.read()
-    return text
+        html = markdown2.markdown(text, extras=["fenced-code-blocks"])
+    return html
 
 
 def page(request, slug='index'):
@@ -72,7 +74,7 @@ def page(request, slug='index'):
 def render_static_page(request, slug):
     """Render the requested page if found."""
     fileinfo = get_matching_extension(slug)
-    if fileinfo["extension"]in [".md", ".txt"]:
+    if fileinfo["extension"] in [".md", ".txt"]:
         context = {
             'slug': slug,
             'text': get_markdown_or_404(fileinfo["filename"]),

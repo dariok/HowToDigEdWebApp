@@ -16,7 +16,7 @@ Since this is not a tutorial about XSLT, I won´t go into the XSL specific detai
 
 To get started, we need a place to store this (and later some more) stylesheets in our database. Therefore we create a new collection **resources/xslt/**. In this collection, we create a new document, called  **resources/xslt/xmlToHtml.xsl**. Our very very basic stylesheet will only contain the following few lines of code:
 
-```xslt
+```
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" exclude-result-prefixes="tei" version="2.0">
     <xsl:template match="/">
         <xsl:apply-templates/>
@@ -32,7 +32,7 @@ To see the effects of this xslt document on one of our XML/TEI documents, we hav
 
 To do so, add the following lines to **modules/app.xql**:
 
-```xquery
+```
 declare function app:XMLtoHTML ($node as node(), $model as map (*), $query as xs:string?) {
 let $xml := doc("/db/apps/thun-demo/data/editions/celakovsky-an-thun_1850_A3-XXI-D82.xml")**
 let $xsl := doc("/db/apps/thun-demo/resources/xslt/xmlToHtml.xsl")**
